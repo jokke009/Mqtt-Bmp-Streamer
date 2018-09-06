@@ -22,6 +22,7 @@
   "scripts": {
     "clean": "rimraf coverage build tmp",
     "build": "tsc -p tsconfig.release.json",
+    "run": "node -p tsconfig.release.json",
     "watch": "tsc -w -p tsconfig.release.json",
     "lint": "tslint -t stylish --project \"tsconfig.json\"",
     "pretest": "npm run lint",
@@ -29,9 +30,12 @@
     "test-only": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "author": "Jakub Synowiec <github@jakubsynowiec.info>",
-  "license": "APLv2",
+  "author": "Joost Vercruysse",
+  "license": "MIT",
   "dependencies": {
-    "tslib": "~1.9.3"
+    "iconv-lite": "^0.4.24",
+    "mqtt": "^2.18.8",
+    "tslib": "~1.9.3",
+    "typescript-logging": "^0.6.2"
   }
 }

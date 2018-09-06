@@ -1,3 +1,9 @@
+import { catMain } from "./Config"
+import * as fs from 'fs';
+import * as path from 'path';
+import * as iconv from 'iconv-lite';
+import * as mqtt from 'mqtt';
+
 /**
  * Some predefined delays (in milliseconds).
  */
@@ -31,3 +37,56 @@ export async function greeter(name) {
   // tslint:disable-next-line no-unsafe-any no-return-await
   return await delayedHello(name, Delays.Long);
 }
+
+
+
+// define the class with constructor
+
+class Program {
+
+  private fontBuffer;
+  constructor(public name: string) {
+    catMain.info("Executing Program: " + name);
+    this.fontBuffer = fs.readFileSync(path.join(__dirname, "../../src/HZK16"));
+    catMain.debug("test value: " + this.fontBuffer.byteLength);
+  }
+
+  public main(): number {
+    console.log('Hello World');
+    this.readText("河");
+    return 0;
+  }
+
+  public readText(text: string)
+  {
+    var ret = [];
+    var gbkBytes = iconv.encode(text, "gbk")
+    for(var i = 0; i < gbkBytes.length / 2; i++){
+      var qh = gbkBytes[2 * i] - 0xa0;
+      var wh = gbkBytes[2 * i + 1] - 0xa0;
+      var offset = (94 * (qh - 1) + (wh - 1)) * 32;
+      var buff = this.fontBuffer.slice(offset, offset+32);
+      //catMain.debug("16x16:  " + buff);
+      var font = [];
+      
+
+
+      for(var j = 0; j < 16; j++){
+        var row =  ("" + buff[2 * j].toString(2)+ buff[2 * j+1].toString(2));
+          
+          row = String(row.split("").map(c=>0|Number(c)));
+          catMain.debug(row);
+        //font.push(row1);
+        
+      }
+      ret.push(font);
+    }
+  
+  }
+
+}
+
+// create the instance of the class
+
+let program = new Program("My Program");
+program.main();

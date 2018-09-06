@@ -16,6 +16,7 @@ Written in Typescript, a service that publishes byte data to a broker, which can
 What's included:
 
 + [TypeScript][typescript] [3.0][typescript-30],
++ [TypeScript-Logging][typescript-logging] [3.0][typescript-30],
 + [TSLint 5][tslint] with [Microsoft rules][tslint-microsoft-contrib],
 + [Jest][jest] unit testing and code coverage,
 + Type definitions for Node.js v8 and Jest,
@@ -68,6 +69,7 @@ Licensed under the MIT. See the [LICENSE](https://github.com/jokke009/Mqtt-Bmp-S
 [travis-badge]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate.svg?branch=master
 [travis-ci]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate
 [typescript]: https://www.typescriptlang.org/
+[typescript-logging]: https://www.npmjs.com/package/typescript-logging
 [typescript-30]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html
 [license-badge]: https://img.shields.io/badge/license-APLv2-blue.svg
 [license]: https://github.com/jsynowiec/node-typescript-boilerplate/blob/master/LICENSE
