@@ -33,6 +33,7 @@
   "author": "Joost Vercruysse",
   "license": "MIT",
   "dependencies": {
+    "feedme": "^1.2.0",
     "iconv-lite": "^0.4.24",
     "mqtt": "^2.18.8",
     "tslib": "~1.9.3",

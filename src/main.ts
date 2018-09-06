@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
 import * as mqtt from 'mqtt';
+import * as feedme from 'feedme';
+import * as http from 'http';
 
 /**
  * Some predefined delays (in milliseconds).
@@ -54,34 +56,54 @@ class Program {
   public main(): number {
     console.log('Hello World');
     this.readText("河");
+    this.getfeed();
     return 0;
   }
 
-  public readText(text: string)
-  {
+  public getfeed(): boolean {
+    http.get('http://www.npr.org/rss/rss.php?id=1001', (res) => {
+      if (res.statusCode != 200) {
+        console.error(new Error(`status code ${res.statusCode}`));
+        return;
+      }
+      var parser = new feedme();
+      parser.on('title', (title) => {
+        console.log('title of feed is', title);
+      });
+      parser.on('item', (item) => {
+        console.log();
+        console.log('news:', item.title);
+        console.log(item.description);
+      });
+      res.pipe(parser);
+    });
+    return true;
+  }
+
+  public readText(text: string) {
     var ret = [];
     var gbkBytes = iconv.encode(text, "gbk")
-    for(var i = 0; i < gbkBytes.length / 2; i++){
+    for (var i = 0; i < gbkBytes.length / 2; i++) {
       var qh = gbkBytes[2 * i] - 0xa0;
       var wh = gbkBytes[2 * i + 1] - 0xa0;
       var offset = (94 * (qh - 1) + (wh - 1)) * 32;
-      var buff = this.fontBuffer.slice(offset, offset+32);
+      var buff = this.fontBuffer.slice(offset, offset + 32);
       //catMain.debug("16x16:  " + buff);
       var font = [];
-      
 
 
-      for(var j = 0; j < 16; j++){
-        var row =  ("" + buff[2 * j].toString(2)+ buff[2 * j+1].toString(2));
-          
-          row = String(row.split("").map(c=>0|Number(c)));
-          catMain.debug(row);
+
+      for (var j = 0; j < 16; j++) {
+        var row = ("" + buff[2 * j].toString(2) + buff[2 * j + 1].toString(2));
+
+        row = String(row.split("").map(c => 0 | Number(c)));
+        catMain.debug(row);
         //font.push(row1);
-        
+
       }
       ret.push(font);
     }
-  
+
   }
 
 }

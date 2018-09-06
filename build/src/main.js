@@ -5,6 +5,8 @@ const Config_1 = require("./Config");
 const fs = require("fs");
 const path = require("path");
 const iconv = require("iconv-lite");
+const feedme = require("feedme");
+const http = require("http");
 var Delays;
 (function (Delays) {
     Delays[Delays["Short"] = 500] = "Short";
@@ -30,7 +32,27 @@ class Program {
     main() {
         console.log('Hello World');
         this.readText("河");
+        this.getfeed();
         return 0;
+    }
+    getfeed() {
+        http.get('http://www.npr.org/rss/rss.php?id=1001', (res) => {
+            if (res.statusCode != 200) {
+                console.error(new Error(`status code ${res.statusCode}`));
+                return;
+            }
+            var parser = new feedme();
+            parser.on('title', (title) => {
+                console.log('title of feed is', title);
+            });
+            parser.on('item', (item) => {
+                console.log();
+                console.log('news:', item.title);
+                console.log(item.description);
+            });
+            res.pipe(parser);
+        });
+        return true;
     }
     readText(text) {
         var ret = [];
