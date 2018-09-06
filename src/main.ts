@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as iconv from 'iconv-lite';
 import * as mqtt from 'mqtt';
 import * as feedme from 'feedme';
-import * as http from 'http';
+import * as https from 'https';
 
 /**
  * Some predefined delays (in milliseconds).
@@ -56,12 +56,12 @@ class Program {
   public main(): number {
     console.log('Hello World');
     this.readText("河");
-    this.getfeed();
+    this.getfeed('https://www.mdbg.net/chinese/feed?feed=hsk_5_h');
     return 0;
   }
 
-  public getfeed(): boolean {
-    http.get('http://www.npr.org/rss/rss.php?id=1001', (res) => {
+  public getfeed(link: string): boolean {
+    https.get(link, (res) => {
       if (res.statusCode != 200) {
         console.error(new Error(`status code ${res.statusCode}`));
         return;
