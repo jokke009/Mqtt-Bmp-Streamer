@@ -11,7 +11,7 @@
 [![Tweet][twitter-badge]][twitter]
 
 
-Written in Typescript, a service that publishes byte data to a broker, which can then be sonsumed by an ESP device. 
+Written in Typescript, a service that publishes byte data to a broker, which can then be consumed by an ESP device. 
 
 What's included:
 
@@ -58,12 +58,9 @@ This is **optional**, but if you want to learn how to write JavaScript tests for
 + `test` - run tests,
 + `test:watch` - interactive watch mode to automatically re-run tests
 
-## Alternative
-
-As an alternative to TypeScript, you can try my [Node.js Flow boilerplate][flow-boilerplate]. It's basically the same but with ES6, async/await, Flow type checking and ESLint.
 
 ## License
-Licensed under the APLv2. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/master/LICENSE) file for details.
+Licensed under the MIT. See the [LICENSE](https://github.com/jokke009/Mqtt-Bmp-Streamer/blob/master/LICENSE) file for details.
 
 [ts-badge]: https://img.shields.io/badge/TypeScript-3.0-blue.svg
 [nodejs-badge]: https://img.shields.io/badge/Node.js->=%208.9-blue.svg
