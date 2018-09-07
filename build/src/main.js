@@ -25,9 +25,11 @@ exports.greeter = greeter;
 class Program {
     constructor(name) {
         this.name = name;
+        this.jarSize = 10;
         Config_1.catMain.info("Executing Program: " + name);
         this.fontBuffer = fs.readFileSync(path.join(__dirname, "../../src/HZK16"));
         Config_1.catMain.debug("test value: " + this.fontBuffer.byteLength);
+        this.jarList = ['a', 'b'];
     }
     main() {
         console.log('Hello World');
@@ -38,17 +40,17 @@ class Program {
     getfeed(link) {
         https.get(link, (res) => {
             if (res.statusCode != 200) {
-                console.error(new Error(`status code ${res.statusCode}`));
+                Config_1.catMain.error("getFeed failed: ", new Error(`status code ${res.statusCode}`));
                 return;
             }
             var parser = new feedme();
             parser.on('title', (title) => {
                 console.log('title of feed is', title);
             });
-            parser.on('item', (item) => {
+            parser.on('entry', (entry) => {
                 console.log();
-                console.log('news:', item.title);
-                console.log(item.description);
+                console.log('entry:', entry.title);
+                console.log(entry.published);
             });
             res.pipe(parser);
         });
@@ -71,7 +73,26 @@ class Program {
             ret.push(font);
         }
     }
+    start() {
+        setInterval(() => {
+            this.updateBroker();
+            for (let i = 0; i < this.jarSize; i++) {
+                Config_1.catMain.warn("array nr: " + i + " value: = " + this.jarList[i]);
+            }
+        }, 1000);
+    }
+    updateBroker() {
+    }
+    addToCircularArray(newitem) {
+        if (this.jarList.length >= this.jarSize) {
+            this.jarList.shift();
+        }
+        else {
+        }
+        this.jarList.indexOf(newitem) === -1 ? this.jarList.push(newitem) : Config_1.catMain.debug("item all ready exists in the circular array: " + newitem);
+    }
 }
 let program = new Program("My Program");
 program.main();
+program.start();
 //# sourceMappingURL=main.js.map

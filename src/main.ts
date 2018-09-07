@@ -47,17 +47,20 @@ export async function greeter(name) {
 class Program {
 
   private fontBuffer;
+  private jarSize = 10;
   private jarList: string[];
   constructor(public name: string) {
     catMain.info("Executing Program: " + name);
     this.fontBuffer = fs.readFileSync(path.join(__dirname, "../../src/HZK16"));
     catMain.debug("test value: " + this.fontBuffer.byteLength);
+    this.jarList = ['a','b'];
   }
 
   public main(): number {
     console.log('Hello World');
     this.readText("河");
     this.getfeed('https://www.mdbg.net/chinese/feed?feed=hsk_5_h');
+    //this.getfeed('https://www.npr.org/rss/rss.php?id=1001');
     return 0;
   }
 
@@ -69,13 +72,15 @@ class Program {
       }
       var parser = new feedme();
       parser.on('title', (title) => {
-        catMain.debug("title of feed is: " + title);
-        this.jarList.push(title);
+        console.log('title of feed is', title);
       });
-      parser.on('item', (item) => {
-        catMain.debug("news: ", item.title);
-        catMain.debug(item.description);
+      parser.on('entry', (entry) => {
+        console.log();
+        console.log('entry:', entry.title);
+        console.log(entry.published);
+
       });
+    
       res.pipe(parser);
     });
     return true;
@@ -107,9 +112,42 @@ class Program {
 
   }
 
+  public start(): void{
+    setInterval(() => {
+      this.updateBroker();
+      for (let i = 0; i < this.jarSize; i++)
+      {
+        catMain.warn("array nr: " + i + " value: = " + this.jarList[i]);
+      }
+     
+  }, 1000);
+  }
+
+
+  public updateBroker()
+  {
+
+  }
+
+  public addToCircularArray(newitem: string)
+  {
+      if(this.jarList.length >= this.jarSize)
+      {
+        this.jarList.shift();
+      }
+      else
+      {
+        
+      }
+      this.jarList.indexOf(newitem) === -1 ?  this.jarList.push(newitem) : catMain.debug("item all ready exists in the circular array: " + newitem);
+  }
+
 }
+
+
 
 // create the instance of the class
 
 let program = new Program("My Program");
 program.main();
+program.start();
