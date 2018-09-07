@@ -47,6 +47,7 @@ export async function greeter(name) {
 class Program {
 
   private fontBuffer;
+  private jarList: string[];
   constructor(public name: string) {
     catMain.info("Executing Program: " + name);
     this.fontBuffer = fs.readFileSync(path.join(__dirname, "../../src/HZK16"));
@@ -63,17 +64,17 @@ class Program {
   public getfeed(link: string): boolean {
     https.get(link, (res) => {
       if (res.statusCode != 200) {
-        console.error(new Error(`status code ${res.statusCode}`));
+        catMain.error("getFeed failed: " ,new Error(`status code ${res.statusCode}`));
         return;
       }
       var parser = new feedme();
       parser.on('title', (title) => {
-        console.log('title of feed is', title);
+        catMain.debug("title of feed is: " + title);
+        this.jarList.push(title);
       });
       parser.on('item', (item) => {
-        console.log();
-        console.log('news:', item.title);
-        console.log(item.description);
+        catMain.debug("news: ", item.title);
+        catMain.debug(item.description);
       });
       res.pipe(parser);
     });

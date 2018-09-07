@@ -12,6 +12,7 @@
 
 
 Written in Typescript, a service that publishes byte data to a broker, which can then be consumed by an ESP device. 
+In this example, we subscribe to a an atom feed from MDBG.net, a great site for looking up words. They also provide a 'word of the day' feed. The example uses the feed to generate 2 characters which can be converted to bitmap byte arrays which can then be published to the broker.
 
 What's included:
 
@@ -30,7 +31,7 @@ What's included:
 This project is intended to be used with v8 (LTS Carbon) release of [Node.js][nodejs] or newer and [NPM][npm]. Make sure you have those installed. Then just type following commands:
 
 ```sh
-git clone https://github.com/jsynowiec/node-typescript-boilerplate
+git clone https://github.com/jokke009/Mqtt-Bmp-Streamer
 cd node-typescript-boilerplate
 npm install
 ```
@@ -38,8 +39,8 @@ npm install
 or just download and unzip current `master` branch:
 
 ```sh
-wget https://github.com/jsynowiec/node-typescript-boilerplate/archive/master.zip -O node-typescript-boilerplate
-unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
+wget https://github.com/jokke009/Mqtt-Bmp-Streamer/archive/master.zip -O node-typescript-boilerplate
+unzip Mqtt-Bmp-Streamer && rm Mqtt-Bmp-Streamer.zip
 ```
 
 Now start adding your code in the `src` and unit tests in the `__tests__` directories. Have fun and build amazing things 🚀
